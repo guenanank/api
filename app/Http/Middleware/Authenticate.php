@@ -35,10 +35,23 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if ($this->auth->guard($guard)->guest()) {
-            return response('Unauthorized.', 401);
-        }
+        if ($this->auth->guard($guard)->guest()) :
+            if ($request->has('token')) :
+                $checkEmployeeToken = \App\Models\Gateway\Employee::where('token', $request->input('token'))->firstOrFail();
+                if (collect($checkEmployeeToken)->isEmpty()) :
+                    return response(['stat' => false, 'msg' => 'Not allowed']);
+                endif;
+            else :
+                return response(['stat' => false, 'msg' => 'Not authenticated']);
+            endif;
+        endif;
 
         return $next($request);
+        
+//        if ($this->auth->guard($guard)->guest()) {
+//            return response('Unauthorized.', 401);
+//        }
+//
+//        return $next($request);
     }
 }
