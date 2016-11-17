@@ -6,10 +6,6 @@ use App\Models\Vehicle\Classification as Classifications;
 
 class Classification extends \App\Http\Controllers\Controller {
 
-    public function __construct() {
-        $this->middleware('auth');
-    }
-
     public function index() {
         $classification = Classifications::with('series')->get();
         return response($classification);

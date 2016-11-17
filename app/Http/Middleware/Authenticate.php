@@ -5,6 +5,9 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
 
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
+
 class Authenticate
 {
     /**
@@ -36,14 +39,14 @@ class Authenticate
     public function handle($request, Closure $next, $guard = null)
     {
         if ($this->auth->guard($guard)->guest()) :
-            if ($request->has('token')) :
-                $checkEmployeeToken = \App\Models\Gateway\Employee::where('token', $request->input('token'))->firstOrFail();
-                if (collect($checkEmployeeToken)->isEmpty()) :
+            try {
+                $username = Crypt::decrypt($request->input('token'));
+                if(collect(\App\Models\Gateway\Employee::findOrFail($username))->isEmpty()) :
                     return response(['stat' => false, 'msg' => 'Not allowed']);
                 endif;
-            else :
+            } catch (DecryptException $e) {
                 return response(['stat' => false, 'msg' => 'Not authenticated']);
-            endif;
+            }
         endif;
 
         return $next($request);

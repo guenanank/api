@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
+
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -32,9 +35,12 @@ class AuthServiceProvider extends ServiceProvider
         // the User instance via an API token or any other method necessary.
 
         Auth::viaRequest('api', function ($request) {
-            if ($request->input('token')) :
-                return \App\Models\Gateway\Employee::where('token', $request->input('token'))->firstOrFail();
-            endif;
+            try {
+                $username = Crypt::decrypt($request->input('token'));
+                return \App\Models\Gateway\Employee::findOrFail($username);
+            } catch (DecryptException $e) {
+                return $e;
+            }
         });
         
 //        Auth::viaRequest('api', function ($request) {

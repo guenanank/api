@@ -6,10 +6,6 @@ use App\Models\Vehicle\Vehicle as Vehicles;
 
 class Vehicle extends \App\Http\Controllers\Controller {
 
-    public function __construct() {
-        $this->middleware('auth');
-    }
-
     public function index() {
         $vehicle = Vehicles::with('type')->all();
         return response($vehicle);

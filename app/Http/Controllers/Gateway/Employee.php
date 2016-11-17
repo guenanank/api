@@ -11,7 +11,12 @@ class Employee extends \App\Http\Controllers\Controller {
     }
 
     public function index() {
-        $employee = Employees::all();
+        $employee = Employees::with('section.departement.division', 'position')->get();
+        return response($employee);
+    }
+    
+    public function show($employeeId) {
+        $employee = Employees::with('section.departement.division', 'position')->find($employeeId);
         return response($employee);
     }
 

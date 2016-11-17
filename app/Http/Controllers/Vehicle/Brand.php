@@ -6,10 +6,6 @@ use App\Models\Vehicle\Brand as Brands;
 
 class Brand extends \App\Http\Controllers\Controller {
 
-    public function __construct() {
-        $this->middleware('auth');
-    }
-
     public function index() {
         $brand = Brands::with('series')->get();
         return response($brand);

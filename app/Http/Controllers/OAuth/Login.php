@@ -11,7 +11,7 @@ class Login extends \App\Http\Controllers\Controller {
     public function index(Request $request) {
 
         $this->validate($request, [
-            'username' => 'required|exists:gateway.employees,*,employeeId,' . $request->username,
+            'username' => 'required',
             'password' => 'required'
         ]);
 
@@ -21,7 +21,7 @@ class Login extends \App\Http\Controllers\Controller {
             return response(['password' => ['Wrong password']], 422);
         endif;
 
-        $token = sha1(time());
+        $token = \Illuminate\Support\Facades\Crypt::encrypt($employee->employeeId);
         $employee->update(['token' => $token]);
         return response(['token' => $token, 'msg' => $employee]);
     }

@@ -6,10 +6,6 @@ use App\Models\Vehicle\Type as Types;
 
 class Type extends \App\Http\Controllers\Controller {
 
-    public function __construct() {
-        $this->middleware('auth');
-    }
-
     public function index() {
         $type = Types::with('series.brand', 'series.classification')->get();
         return response($type);

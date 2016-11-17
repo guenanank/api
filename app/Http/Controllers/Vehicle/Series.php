@@ -4,10 +4,6 @@ namespace App\Http\Controllers\Vehicle;
 
 class Series extends \App\Http\Controllers\Controller {
 
-    public function __construct() {
-        $this->middleware('auth');
-    }
-
     public function index() {
         $series = \App\Models\Vehicle\Series::with('brand', 'classification')->get();
         return response($series);
