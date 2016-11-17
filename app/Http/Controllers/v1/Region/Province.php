@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Region;
+namespace App\Http\Controllers\v1\Region;
 
 use App\Models\Region\Province as Provinces;
 

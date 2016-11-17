@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Gateway;
+namespace App\Http\Controllers\v1\Gateway;
 
 use App\Models\Gateway\Employee as Employees;
 

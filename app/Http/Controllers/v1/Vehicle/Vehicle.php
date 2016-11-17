@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers\Vehicle;
+namespace App\Http\Controllers\v1\Vehicle;
 
-use App\Models\Vehicle\Brand as Brands;
+use App\Models\Vehicle\Vehicle as Vehicles;
 
-class Brand extends \App\Http\Controllers\Controller {
+class Vehicle extends \App\Http\Controllers\Controller {
 
     public function index() {
-        $brand = Brands::with('series')->get();
-        return response($brand);
+        $vehicle = Vehicles::with('type')->all();
+        return response($vehicle);
     }
 
     public function bootgrid(\Illuminate\Http\Request $request) {
@@ -16,7 +16,7 @@ class Brand extends \App\Http\Controllers\Controller {
         $rowCount = $request->input('rowCount', 10);
         $skip = $current ? ($current - 1) * $rowCount : 0;
         $search = $request->input('searchPhrase');
-        $sortColumn = 'brandName';
+        $sortColumn = 'vehicleName';
         $sortType = 'ASC';
 
         if (is_array($request->input('sort'))) :
@@ -26,18 +26,15 @@ class Brand extends \App\Http\Controllers\Controller {
             endforeach;
         endif;
 
-        $rows = Brands::where('brandName', 'like', '%' . $search . '%')
-                ->orWhereHas('series', function($query) use($search) {
-                    $query->where('seriesName', 'LIKE', '%' . $search . '%');
+        $rows = Vehicles::where('vehicleName', 'like', '%' . $search . '%')
+                ->orWhereHas('type', function($type) use($search) {
+                    $type->where('typeName', 'LIKE', '%' . $search . '%');
                 })
-                ->with('series')
+                ->with('type')
                 ->skip($skip)->take($rowCount)->orderBy($sortColumn, $sortType)
                 ->get();
 
-        $total = Brands::where('brandName', 'like', '%' . $search . '%')
-                ->orWhereHas('series', function($query) use($search) {
-                    $query->where('seriesName', 'LIKE', '%' . $search . '%');
-                })
+        $total = Vehicles::where('vehicleName', 'like', '%' . $search . '%')
                 ->count();
 
         return response([
@@ -49,7 +46,7 @@ class Brand extends \App\Http\Controllers\Controller {
     }
 
     public function lists() {
-        $lists = Brands::lists('brandName', 'brandId');
+        $lists = Vehicles::lists('vehicleName', 'vehicleId');
         return response($lists);
     }
 

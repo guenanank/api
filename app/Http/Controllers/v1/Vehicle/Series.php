@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Vehicle;
+namespace App\Http\Controllers\v1\Vehicle;
 
 class Series extends \App\Http\Controllers\Controller {
 

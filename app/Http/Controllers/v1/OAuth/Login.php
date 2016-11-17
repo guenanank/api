@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\OAuth;
+namespace App\Http\Controllers\v1\OAuth;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Vehicle;
+namespace App\Http\Controllers\v1\Vehicle;
 
 use App\Models\Vehicle\Type as Types;
 
