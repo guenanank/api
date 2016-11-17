@@ -19,7 +19,7 @@ $app->get('hash/{key}', function ($key) use($app) {
     return Illuminate\Support\Facades\Hash::make($key);
 });
 
-$app->group(['middleware' => 'auth', 'prefix' => 'v1', 'namespace' => 'App\Http\Controllers\v1'], function() use($app) {
+$app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers\v1'], function() use($app) {
 
     $app->group(['namespace' => 'App\Http\Controllers\v1\Gateway'], function() use($app) {
         $app->get('v1/gateway/employee', 'Employee@index');
