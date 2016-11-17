@@ -15,6 +15,10 @@ $app->get('/', function () use($app) {
     return $app->version();
 });
 
+$app->get('hash/{key}', function ($key) use($app) {
+    return Illuminate\Support\Facades\Hash::make($key);
+});
+
 $app->group(['middleware' => 'auth', 'prefix' => 'v1', 'namespace' => 'App\Http\Controllers\v1'], function() use($app) {
 
     $app->group(['namespace' => 'App\Http\Controllers\v1\Gateway'], function() use($app) {
