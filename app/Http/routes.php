@@ -31,7 +31,9 @@ $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers\v1'], 
         $app->get('v1/region/regency', 'Regency@index');
         $app->get('v1/region/district', 'District@index');
         $app->get('v1/region/village', 'Village@index');
+        
         $app->get('v1/region/greaterArea', 'GreaterArea@index');
+        $app->post('v1/region/greaterArea/bootgrid', 'GreaterArea@bootgrid');
     });
 
     $app->group(['namespace' => 'App\Http\Controllers\v1\Vehicle'], function() use($app) {
