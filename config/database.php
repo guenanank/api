@@ -3,9 +3,8 @@
 return [
     
     'fetch' => PDO::FETCH_CLASS,
-
+    'unix_socket' => '/tmp/mysql.sock',
     'default' => env('DB_CONNECTION', 'api'),
-    
     'connections' => [
         
         'api' => [
