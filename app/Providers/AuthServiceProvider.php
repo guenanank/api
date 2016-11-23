@@ -35,12 +35,14 @@ class AuthServiceProvider extends ServiceProvider
         // the User instance via an API token or any other method necessary.
 
         Auth::viaRequest('api', function ($request) {
-            try {
-                $username = Crypt::decrypt($request->input('token'));
-                return \App\Models\Gateway\Employee::findOrFail($username);
-            } catch (DecryptException $e) {
-                return $e;
-            }
+            if ($request->has('token')) :
+                try {
+                    $username = Crypt::decrypt($request->input('token'));
+                    return \App\Models\Gateway\Employee::findOrFail($username);
+                } catch (DecryptException $e) {
+                    return $e;
+                }
+            endif;
         });
         
 //        Auth::viaRequest('api', function ($request) {

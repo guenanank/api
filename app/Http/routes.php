@@ -24,16 +24,32 @@ $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers\v1'], 
     $app->group(['namespace' => 'App\Http\Controllers\v1\Gateway'], function() use($app) {
         $app->get('v1/gateway/employee', 'Employee@index');
         $app->get('v1/gateway/employee/{employee}', 'Employee@show');
+        
+        $app->get('v1/gateway/media', 'Media@index');
+        $app->post('v1/gateway/media/bootgrid', 'Media@bootgrid');
+        
     });
 
     $app->group(['namespace' => 'App\Http\Controllers\v1\Region'], function() use($app) {
         $app->get('v1/region/province', 'Province@index');
+        $app->post('v1/region/province/lists', 'Province@lists');
+        
         $app->get('v1/region/regency', 'Regency@index');
+        $app->options('v1/region/regency/lists', 'Regency@lists');
+        
         $app->get('v1/region/district', 'District@index');
+        $app->get('v1/region/district/lists', 'District@lists');
+        
         $app->get('v1/region/village', 'Village@index');
+        $app->get('v1/region/village/lists', 'Village@lists');
         
         $app->get('v1/region/greaterArea', 'GreaterArea@index');
+        $app->get('v1/region/greaterArea/{greaterAreaId}', 'GreaterArea@get');
         $app->post('v1/region/greaterArea/bootgrid', 'GreaterArea@bootgrid');
+        $app->post('v1/region/greaterArea/store', 'GreaterArea@store');
+        $app->patch('v1/region/greaterArea/update/{greaterAreaId}', 'GreaterArea@update');
+        $app->delete('v1/region/greaterArea/{greaterAreaId}', 'GreaterArea@destroy');
+        $app->options('v1/region/greaterArea/lists', 'GreaterArea@lists');
     });
 
     $app->group(['namespace' => 'App\Http\Controllers\v1\Vehicle'], function() use($app) {

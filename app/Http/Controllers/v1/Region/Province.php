@@ -14,5 +14,10 @@ class Province extends \App\Http\Controllers\Controller {
         $province = Provinces::all();
         return response($province);
     }
+    
+    public function lists() {
+        $lists = Provinces::lists('provinceName', 'provinceId');
+        return response($lists);
+    }
 
 }
