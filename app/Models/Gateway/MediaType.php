@@ -8,8 +8,4 @@ class MediaType extends \Illuminate\Database\Eloquent\Model {
     protected $table = 'mediaTypes';
     public $primaryKey = 'mediaTypeId';
 
-    public function media() {
-        return $this->belongsTo('\App\Models\Gateway\Media', 'mediaId', 'mediaId');
-    }
-
 }

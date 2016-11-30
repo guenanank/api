@@ -8,11 +8,11 @@ class Media extends \Illuminate\Database\Eloquent\Model {
     public $primaryKey = 'mediaId';
 
     public function mediaType() {
-        return $this->hasOne('\App\Models\Gateway\MediaType', 'mediaTypeId', 'mediaTypeId');
+        return $this->belongsTo('\App\Models\Gateway\MediaType', 'mediaTypeId');
     }
 
     public function mediaGroup() {
-        return $this->hasOne('\App\Models\Gateway\MediaGroup', 'mediaGroupId', 'mediaGroupId');
+        return $this->belongsTo('\App\Models\Gateway\MediaGroup', 'mediaGroupId');
     }
 
 }

@@ -11,13 +11,13 @@ class Media extends \App\Http\Controllers\Controller {
     }
 
     public function index() {
-        $employee = MediaModel::with('mediaType', 'mediaGroup')->get();
-        return response($employee);
+        $media = MediaModel::with('mediaType')->all();
+        return response($media);
     }
     
-    public function show($employeeId) {
-        $employee = MediaModel::with('section.departement.division', 'position')->find($employeeId);
-        return response($employee);
+    public function get($mediaId) {
+        $media = MediaModel::with('mediaGroup', 'mediaType')->findOrFail($mediaId);
+        return response($media);
     }
 
     public function bootgrid(\Illuminate\Http\Request $request) {
@@ -55,6 +55,11 @@ class Media extends \App\Http\Controllers\Controller {
             'rows' => $rows,
             'total' => $total
         ]);
+    }
+    
+    public function lists() {
+        $lists = MediaModel::lists('mediaName', 'mediaId');
+        return response($lists);
     }
     
 }
