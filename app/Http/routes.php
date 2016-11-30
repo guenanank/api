@@ -15,7 +15,11 @@ $app->get('/', function () use($app) {
     return $app->version();
 });
 
-$app->get('hash/{key}', function ($key) {
+$app->get('token/{key}', function ($key) {
+    return Illuminate\Support\Facades\Crypt::encrypt($key);
+});
+
+$app->get('password/{key}', function ($key) {
     return Illuminate\Support\Facades\Hash::make($key);
 });
 
