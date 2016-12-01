@@ -7,7 +7,12 @@ use App\Models\Vehicle\Type as Types;
 class Type extends \App\Http\Controllers\Controller {
 
     public function index() {
-        $type = Types::with('series.brand', 'series.classification')->get();
+        $types = Types::with('series.brand', 'series.classification')->get();
+        return response($types);
+    }
+    
+    public function get($typeId) {
+        $type = Types::with('series.brand', 'series.classification')->findOrFail($typeId);
         return response($type);
     }
 

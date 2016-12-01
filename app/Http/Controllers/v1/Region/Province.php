@@ -11,7 +11,12 @@ class Province extends \App\Http\Controllers\Controller {
     }
     
     public function index() {
-        $province = Provinces::all();
+        $provinces = Provinces::all();
+        return response($provinces);
+    }
+    
+    public function get($provinceId) {
+        $province = Provinces::findOrFail($provinceId);
         return response($province);
     }
     

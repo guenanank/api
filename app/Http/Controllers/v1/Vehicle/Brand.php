@@ -7,7 +7,12 @@ use App\Models\Vehicle\Brand as Brands;
 class Brand extends \App\Http\Controllers\Controller {
 
     public function index() {
-        $brand = Brands::with('series')->get();
+        $brands = Brands::with('series')->get();
+        return response($brands);
+    }
+    
+    public function get($brandId) {
+        $brand = Brands::with('series')->findOrFail($brandId);
         return response($brand);
     }
 

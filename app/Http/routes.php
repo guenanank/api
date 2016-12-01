@@ -45,12 +45,15 @@ $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers\v1'], 
 
     $app->group(['namespace' => 'App\Http\Controllers\v1\Region'], function() use($app) {
         $app->get('v1/region/province', 'Province@index');
+        $app->get('v1/region/province/{provinceId}', 'Province@get');
         $app->options('v1/region/province/lists', 'Province@lists');
 
         $app->get('v1/region/regency', 'Regency@index');
+        $app->get('v1/region/regency/{regencyId}', 'Regency@get');
         $app->options('v1/region/regency/lists', 'Regency@lists');
 
         $app->get('v1/region/district', 'District@index');
+        $app->get('v1/region/district/{districtId}', 'District@get');
         $app->options('v1/region/district/lists', 'District@lists');
 
         $app->get('v1/region/village', 'Village@index');
@@ -67,22 +70,27 @@ $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers\v1'], 
 
     $app->group(['namespace' => 'App\Http\Controllers\v1\Vehicle'], function() use($app) {
         $app->get('v1/vehicle/brand', 'Brand@index');
+        $app->get('v1/vehicle/brand/{brandId}', 'Brand@get');
         $app->options('v1/vehicle/brand/lists', 'Brand@lists');
         $app->post('v1/vehicle/brand/bootgrid', 'Brand@bootgrid');
 
         $app->get('v1/vehicle/classification', 'Classification@index');
+        $app->get('v1/vehicle/classification/{classificationId}', 'Classification@get');
         $app->options('v1/vehicle/classification/lists', 'Classification@lists');
         $app->post('v1/vehicle/classification/bootgrid', 'Classification@bootgrid');
 
         $app->get('v1/vehicle/series', 'Series@index');
+        $app->get('v1/vehicle/series/{seriesId}', 'Series@get');
         $app->options('v1/vehicle/series/lists', 'Series@lists');
         $app->post('v1/vehicle/series/bootgrid', 'Series@bootgrid');
 
         $app->get('v1/vehicle/type', 'Type@index');
+        $app->get('v1/vehicle/type/{typeId}', 'Type@get');
         $app->options('v1/vehicle/type/lists', 'Type@lists');
         $app->post('v1/vehicle/type/bootgrid', 'Type@bootgrid');
 
         $app->get('v1/vehicle/vehicle', 'Vehicle@index');
+        $app->get('v1/vehicle/vehicle/{vehicleId}', 'Vehicle@get');
         $app->options('v1/vehicle/vehicle/lists', 'Vehicle@lists');
         $app->post('v1/vehicle/vehicle/bootgrid', 'Vehicle@bootgrid');
     });

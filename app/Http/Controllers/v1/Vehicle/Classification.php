@@ -7,7 +7,12 @@ use App\Models\Vehicle\Classification as Classifications;
 class Classification extends \App\Http\Controllers\Controller {
 
     public function index() {
-        $classification = Classifications::with('series')->get();
+        $classifications = Classifications::with('series')->get();
+        return response($classifications);
+    }
+    
+    public function get($classificationId) {
+        $classification = Classifications::with('series')->findOrFail($classificationId);
         return response($classification);
     }
 

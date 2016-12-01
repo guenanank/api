@@ -11,7 +11,12 @@ class District extends \App\Http\Controllers\Controller {
     }
 
     public function index() {
-        $district = Districts::all();
+        $districts = Districts::all();
+        return response($districts);
+    }
+    
+    public function get($districtId) {
+        $district = Districts::findOrFail($districtId);
         return response($district);
     }
 

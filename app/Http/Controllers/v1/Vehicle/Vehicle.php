@@ -7,7 +7,12 @@ use App\Models\Vehicle\Vehicle as Vehicles;
 class Vehicle extends \App\Http\Controllers\Controller {
 
     public function index() {
-        $vehicle = Vehicles::with('type')->all();
+        $vehicles = Vehicles::with('type')->all();
+        return response($vehicles);
+    }
+    
+    public function get($vehicleId) {
+        $vehicle = Vehicles::with('type')->findOrFail($vehicleId);
         return response($vehicle);
     }
 

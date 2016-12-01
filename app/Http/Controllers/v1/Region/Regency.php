@@ -11,7 +11,12 @@ class Regency extends \App\Http\Controllers\Controller {
     }
     
     public function index() {
-        $regency = Regencies::all();
+        $regencies = Regencies::all();
+        return response($regencies);
+    }
+    
+    public function get($regencyId) {
+        $regency = Regencies::findOrFail($regencyId);
         return response($regency);
     }
     

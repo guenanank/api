@@ -8,6 +8,11 @@ class Series extends \App\Http\Controllers\Controller {
         $series = \App\Models\Vehicle\Series::with('brand', 'classification')->get();
         return response($series);
     }
+    
+    public function get($seriesId) {
+        $series = \App\Models\Vehicle\Series::with('brand', 'classification')->findOrFail($seriesId);
+        return response($series);
+    }
 
     public function bootgrid(\Illuminate\Http\Request $request) {
         $current = $request->input('current', 1);
