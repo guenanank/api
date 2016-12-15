@@ -24,5 +24,10 @@ class District extends \App\Http\Controllers\Controller {
         $lists = Districts::lists('districtName', 'districtId');
         return response($lists);
     }
+    
+    public function getByRegency($regencyId) {
+        $districts = Districts::select('districtId', 'districtName')->where('regencyId', $regencyId)->get();
+        return response($districts);
+    }
 
 }

@@ -29,9 +29,12 @@ $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers\v1'], 
         $app->get('v1/gateway/employee', 'Employee@index');
         $app->get('v1/gateway/employee/{employeeId}', 'Employee@show');
 
+        $app->get('v1/gateway/mediaHowToGet', 'MediaHowToGet@index');
+        $app->get('v1/gateway/mediaHowToGet/{mediaHowToGetId}', 'MediaHowToGet@get');
+        $app->options('v1/gateway/mediaHowToGet/lists', 'MediaHowToGet@lists');
+        
         $app->get('v1/gateway/media', 'Media@index');
         $app->get('v1/gateway/media/{mediaId}', 'Media@get');
-        $app->post('v1/gateway/media/bootgrid', 'Media@bootgrid');
         $app->options('v1/gateway/media/lists', 'Media@lists');
 
         $app->get('v1/gateway/mediaGroup', 'MediaGroup@index');
@@ -51,13 +54,17 @@ $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers\v1'], 
         $app->get('v1/region/regency', 'Regency@index');
         $app->get('v1/region/regency/{regencyId}', 'Regency@get');
         $app->options('v1/region/regency/lists', 'Regency@lists');
+        $app->get('v1/region/regency/province/{provinceId}', 'Regency@getByProvince');
 
         $app->get('v1/region/district', 'District@index');
         $app->get('v1/region/district/{districtId}', 'District@get');
         $app->options('v1/region/district/lists', 'District@lists');
+        $app->get('v1/region/district/regency/{regencyId}', 'District@getByRegency');
 
         $app->get('v1/region/village', 'Village@index');
+        $app->get('v1/region/village/{villageId}', 'Village@get');
         $app->options('v1/region/village/lists', 'Village@lists');
+        $app->get('v1/region/village/district/{districtId}', 'Village@getByDistrict');
 
         $app->get('v1/region/greaterArea', 'GreaterArea@index');
         $app->get('v1/region/greaterArea/{greaterAreaId}', 'GreaterArea@get');

@@ -11,13 +11,23 @@ class Village extends \App\Http\Controllers\Controller {
     }
     
     public function index() {
-        $village = Villages::all();
+        $villages = Villages::all();
+        return response($villages);
+    }
+    
+    public function get($villageId) {
+        $village = Villages::findOrFail($villageId);
         return response($village);
     }
     
     public function lists() {
         $lists = Villages::lists('villageName', 'villageId');
         return response($lists);
+    }
+    
+    public function getByDistrict($districtId) {
+        $villages = Villages::select('villageName', 'villageId')->where('districtId', $districtId)->get();
+        return response($villages);
     }
 
 }

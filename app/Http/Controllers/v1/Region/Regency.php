@@ -24,5 +24,10 @@ class Regency extends \App\Http\Controllers\Controller {
         $lists = Regencies::lists('regencyName', 'regencyId');
         return response($lists);
     }
+    
+    public function getByProvince($provinceId) {
+        $regencies = Regencies::select('regencyId', 'regencyName')->where('provinceId', $provinceId)->get();
+        return response($regencies);
+    }
 
 }
