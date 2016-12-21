@@ -36,6 +36,7 @@ $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers\v1'], 
         $app->get('v1/gateway/media', 'Media@index');
         $app->get('v1/gateway/media/{mediaId}', 'Media@get');
         $app->options('v1/gateway/media/lists', 'Media@lists');
+        $app->options('v1/gateway/media/lists/gmc', 'Media@listsGMC');
 
         $app->get('v1/gateway/mediaGroup', 'MediaGroup@index');
         $app->get('v1/gateway/mediaGroup/{mediaGroupId}', 'MediaGroup@get');

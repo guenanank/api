@@ -62,4 +62,9 @@ class Media extends \App\Http\Controllers\Controller {
         return response($lists);
     }
     
+    public function listsGMC() {
+        $lists = MediaModel::where('mediaIsExternal', true)->lists('mediaName', 'mediaId');
+        return response($lists);
+    }
+    
 }
