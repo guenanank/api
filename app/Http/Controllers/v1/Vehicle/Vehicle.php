@@ -51,7 +51,7 @@ class Vehicle extends \App\Http\Controllers\Controller {
     }
 
     public function lists() {
-        $lists = Vehicles::lists('vehicleName', 'vehicleId');
+        $lists = Vehicles::lists('vehicleId', 'vehicleId');
         return response($lists);
     }
     
