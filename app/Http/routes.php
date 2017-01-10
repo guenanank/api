@@ -100,6 +100,7 @@ $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers\v1'], 
         $app->get('v1/vehicle/vehicle', 'Vehicle@index');
         $app->get('v1/vehicle/vehicle/{vehicleId}', 'Vehicle@get');
         $app->options('v1/vehicle/vehicle/lists', 'Vehicle@lists');
+        $app->options('v1/vehicle/vehicle/lists/gmc', 'Vehicle@listsGMC');
         $app->post('v1/vehicle/vehicle/bootgrid', 'Vehicle@bootgrid');
     });
 });

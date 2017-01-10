@@ -54,5 +54,10 @@ class Vehicle extends \App\Http\Controllers\Controller {
         $lists = Vehicles::lists('vehicleName', 'vehicleId');
         return response($lists);
     }
+    
+    public function listsGMC() {
+        $lists = \App\Models\Vehicle\Type::lists('typeName', 'typeId');
+        return response($lists);
+    }
 
 }
