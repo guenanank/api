@@ -45,6 +45,10 @@ $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers\v1'], 
         $app->get('v1/gateway/publisher', 'Publisher@index');
         $app->get('v1/gateway/publisher/{publisherId}', 'Publisher@get');
         $app->options('v1/gateway/publisher/lists', 'Publisher@lists');
+        
+        $app->get('v1/gateway/mediaType', 'MediaType@index');
+        $app->get('v1/gateway/mediaType/{mediaTypeId}', 'MediaType@get');
+        $app->options('v1/gateway/mediaType/lists', 'MediaType@lists');
     });
 
     $app->group(['namespace' => 'App\Http\Controllers\v1\Region'], function() use($app) {
