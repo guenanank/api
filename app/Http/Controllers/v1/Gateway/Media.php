@@ -67,4 +67,20 @@ class Media extends \App\Http\Controllers\Controller {
         return response($lists);
     }
     
+    public function internalPrintLists() {
+        $lists = MediaModel::where([
+            ['mediaIsExternal', '=', false],
+            ['mediaTypeId', '=', 1]
+        ])->lists('mediaName', 'mediaId');
+        return response($lists);
+    }
+    
+    public function internalDigitalLists() {
+        $lists = MediaModel::where([
+            ['mediaIsExternal', '=', false],
+            ['mediaTypeId', '<>', 1]
+        ])->lists('mediaName', 'mediaId');
+        return response($lists);
+    }
+    
 }

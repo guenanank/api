@@ -37,6 +37,8 @@ $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers\v1'], 
         $app->get('v1/gateway/media/{mediaId}', 'Media@get');
         $app->options('v1/gateway/media/lists', 'Media@lists');
         $app->options('v1/gateway/media/lists/gmc', 'Media@listsGMC');
+        $app->options('v1/gateway/media/internal/print/lists', 'Media@internalPrintLists');
+        $app->options('v1/gateway/media/internal/digital/lists', 'Media@internalDigitalLists');
 
         $app->get('v1/gateway/mediaGroup', 'MediaGroup@index');
         $app->get('v1/gateway/mediaGroup/{mediaGroupId}', 'MediaGroup@get');
