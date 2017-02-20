@@ -33,6 +33,10 @@ $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers\v1'], 
         $app->get('v1/gateway/mediaHowToGet/{mediaHowToGetId}', 'MediaHowToGet@get');
         $app->options('v1/gateway/mediaHowToGet/lists', 'MediaHowToGet@lists');
         
+        $app->get('v1/gateway/mediaCategory', 'MediaCategory@index');
+        $app->get('v1/gateway/mediaCategory/{mediaCategoryId}', 'MediaCategory@get');
+        $app->options('v1/gateway/mediaCategory/lists', 'MediaCategory@lists');
+        
         $app->get('v1/gateway/media', 'Media@index');
         $app->get('v1/gateway/media/{mediaId}', 'Media@get');
         $app->options('v1/gateway/media/lists', 'Media@lists');
@@ -48,9 +52,9 @@ $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers\v1'], 
         $app->get('v1/gateway/publisher/{publisherId}', 'Publisher@get');
         $app->options('v1/gateway/publisher/lists', 'Publisher@lists');
         
-        $app->get('v1/gateway/mediaType', 'MediaType@index');
-        $app->get('v1/gateway/mediaType/{mediaTypeId}', 'MediaType@get');
-        $app->options('v1/gateway/mediaType/lists', 'MediaType@lists');
+        $app->get('v1/gateway/product', 'Product@index');
+        $app->options('v1/gateway/product/print', 'Product@listsPrint');
+        $app->options('v1/gateway/product/digital', 'Product@listsDigital');
     });
 
     $app->group(['namespace' => 'App\Http\Controllers\v1\Region'], function() use($app) {

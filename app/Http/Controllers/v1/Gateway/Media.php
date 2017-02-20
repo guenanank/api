@@ -11,7 +11,7 @@ class Media extends \App\Http\Controllers\Controller {
     }
 
     public function index() {
-        $media = MediaModel::with('mediaType')->all();
+        $media = MediaModel::with('mediaCategory')->all();
         return response($media);
     }
     
