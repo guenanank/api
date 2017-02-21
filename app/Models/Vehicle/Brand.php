@@ -10,7 +10,7 @@ class Brand extends \Illuminate\Database\Eloquent\Model {
 
     public static function rules($rules = []) {
         return array_merge($rules, [
-            'brandName' => 'required|string|max:127|unique:vehicle.' . $this->table,
+            'brandName' => 'required|string|max:127|unique:vehicle.' . self::table,
         ]);
     }
 
