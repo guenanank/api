@@ -33,28 +33,28 @@ class Series extends \App\Http\Controllers\Controller {
         endif;
 
         if (empty($search)) :
-            $rows = \App\Models\Vehicle\Series::with('series', 'classification')
+            $rows = \App\Models\Vehicle\Series::with('classification', 'brand')
                     ->skip($skip)->take($rowCount)->orderBy($sortColumn, $sortType)
                     ->get();
             $total = \App\Models\Vehicle\Series::count();
         else :
             $rows = \App\Models\Vehicle\Series::where('seriesName', 'like', '%' . $search . '%')
-                    ->orWhereHas('series', function($query) use($search) {
-                        $query->where('seriesName', 'LIKE', '%' . $search . '%');
-                    })
                     ->orWhereHas('classification', function($query) use($search) {
                         $query->where('classificationName', 'LIKE', '%' . $search . '%');
                     })
-                    ->with('series', 'classification')
+                    ->orWhereHas('brand', function($query) use($search) {
+                        $query->where('brandName', 'LIKE', '%' . $search . '%');
+                    })
+                    ->with('classification', 'brand')
                     ->skip($skip)->take($rowCount)->orderBy($sortColumn, $sortType)
                     ->get();
 
             $total = \App\Models\Vehicle\Series::where('seriesName', 'like', '%' . $search . '%')
-                    ->orWhereHas('series', function($query) use($search) {
-                        $query->where('seriesName', 'LIKE', '%' . $search . '%');
-                    })
                     ->orWhereHas('classification', function($query) use($search) {
                         $query->where('classificationName', 'LIKE', '%' . $search . '%');
+                    })
+                    ->orWhereHas('brand', function($query) use($search) {
+                        $query->where('brandName', 'LIKE', '%' . $search . '%');
                     })
                     ->count();
         endif;
