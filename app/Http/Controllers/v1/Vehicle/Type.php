@@ -40,8 +40,9 @@ class Type extends \App\Http\Controllers\Controller {
             $total = Types::count();
         else :
             $rows = Types::where('typeName', 'like', '%' . $search . '%')
-                    ->orWhereHas('types', function($query) use($search) {
-                        $query->where('typesName', 'LIKE', '%' . $search . '%');
+                    ->orWhereHas('series', function($query) use($search) {
+                        $query->where('seriesName', 'LIKE', '%' . $search . '%');
+                        
                         $query->orWhereHas('brand', function($brand) use($search) {
                             $brand->where('brandName', 'LIKE', '%' . $search . '%');
                         });
