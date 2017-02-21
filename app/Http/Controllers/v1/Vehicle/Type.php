@@ -34,7 +34,7 @@ class Type extends \App\Http\Controllers\Controller {
         endif;
 
         if (empty($search)) :
-            $rows = Types::with('types.brand', 'types.classification')
+            $rows = Types::with('series.brand', 'series.classification')
                     ->skip($skip)->take($rowCount)->orderBy($sortColumn, $sortType)
                     ->get();
             $total = Types::count();
@@ -49,13 +49,14 @@ class Type extends \App\Http\Controllers\Controller {
                             $classification->where('classificationName', 'LIKE', '%' . $search . '%');
                         });
                     })
-                    ->with('types.brand', 'types.classification')
+                    ->with('series.brand', 'series.classification')
                     ->skip($skip)->take($rowCount)->orderBy($sortColumn, $sortType)
                     ->get();
 
             $total = Types::where('typeName', 'like', '%' . $search . '%')
-                    ->orWhereHas('types', function($query) use($search) {
-                        $query->where('typesName', 'LIKE', '%' . $search . '%');
+                    ->orWhereHas('series', function($query) use($search) {
+                        $query->where('seriesName', 'LIKE', '%' . $search . '%');
+                        
                         $query->orWhereHas('brand', function($brand) use($search) {
                             $brand->where('brandName', 'LIKE', '%' . $search . '%');
                         });
