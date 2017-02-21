@@ -11,7 +11,7 @@ class Type extends \Illuminate\Database\Eloquent\Model {
     public static function rules($rules = []) {
         return array_merge($rules, [
             'seriesId' => 'required|exists:vehicle.series,seriesId',
-            'typeName' => 'string|max:127',
+            'typeName' => 'required|string|max:127',
             'typeYear' => 'string|max:9999',
             'typeCc' => 'numeric',
         ]);
