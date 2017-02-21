@@ -91,8 +91,8 @@ $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers\v1'], 
         $app->get('v1/vehicle/brand/{brandId}', 'Brand@get');
         $app->options('v1/vehicle/brand/lists', 'Brand@lists');
         $app->post('v1/vehicle/brand/bootgrid', 'Brand@bootgrid');
-        $app->post('v1/vehicle/brand/bootgrid/store', 'Brand@store');
-        $app->patch('v1/vehicle/brand/bootgrid/update/{brandId}', 'Brand@update');
+        $app->post('v1/vehicle/brand/store', 'Brand@store');
+        $app->patch('v1/vehicle/brand/update/{brandId}', 'Brand@update');
         $app->delete('v1/vehicle/brand/{brnadiId}', 'Brand@destroy');
 
         $app->get('v1/vehicle/classification', 'Classification@index');
