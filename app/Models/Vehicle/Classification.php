@@ -10,7 +10,7 @@ class Classification extends \Illuminate\Database\Eloquent\Model {
 
     public static function rules($rules = []) {
         return array_merge($rules, [
-            'classificationName' => 'required|string|max:127|unique:vehicle.' . $this->table(),
+            'classificationName' => 'required|string|max:127|unique:vehicle.classifications',
             'classificationDesc' => 'max:225'
         ]);
     }
