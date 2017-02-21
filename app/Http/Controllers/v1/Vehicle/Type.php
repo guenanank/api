@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\v1\Vehicle;
 
+use Validator;
+use Illuminate\Http\Request;
 use App\Models\Vehicle\Type as Types;
 
 class Type extends \App\Http\Controllers\Controller {
@@ -71,7 +73,7 @@ class Type extends \App\Http\Controllers\Controller {
             'total' => $total
         ]);
     }
-    
+
     public function store(Request $request) {
         $validator = Validator::make($request->all(), Types::rules());
         if ($validator->fails()) :

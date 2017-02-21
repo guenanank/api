@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers\v1\Vehicle;
 
+use Validator;
+use Illuminate\Http\Request;
+
 class Series extends \App\Http\Controllers\Controller {
 
     public function index() {
@@ -93,7 +96,7 @@ class Series extends \App\Http\Controllers\Controller {
         $delete = $series->delete();
         return response(['delete' => $delete], $delete ? 200 : 422);
     }
-    
+
     public function lists() {
         $lists = \App\Models\Vehicle\Series::lists('seriesName', 'seriesId');
         return response($lists);

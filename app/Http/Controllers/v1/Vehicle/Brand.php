@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\v1\Vehicle;
 
+use Validator;
+use Illuminate\Http\Request;
 use App\Models\Vehicle\Brand as Brands;
 
 class Brand extends \App\Http\Controllers\Controller {
