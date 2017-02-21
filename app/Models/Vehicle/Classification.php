@@ -5,6 +5,7 @@ namespace App\Models\Vehicle;
 class Classification extends \Illuminate\Database\Eloquent\Model {
 
     protected $connection = 'vehicle';
+    protected $table = 'classifications';
     public $primaryKey = 'classificationId';
     protected $fillable = ['classificationName', 'classificationDesc'];
 
