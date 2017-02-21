@@ -14,7 +14,7 @@ class Type extends \App\Http\Controllers\Controller {
     }
 
     public function get($typeId) {
-        $type = Types::with('series.brand', 'series.classification')->findOrFail($typeId);
+        $type = Types::findOrFail($typeId);
         return response($type);
     }
 

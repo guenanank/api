@@ -13,7 +13,7 @@ class Series extends \App\Http\Controllers\Controller {
     }
 
     public function get($seriesId) {
-        $series = \App\Models\Vehicle\Series::with('series', 'classification')->findOrFail($seriesId);
+        $series = \App\Models\Vehicle\Series::findOrFail($seriesId);
         return response($series);
     }
 
