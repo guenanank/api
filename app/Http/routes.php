@@ -91,21 +91,33 @@ $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers\v1'], 
         $app->get('v1/vehicle/brand/{brandId}', 'Brand@get');
         $app->options('v1/vehicle/brand/lists', 'Brand@lists');
         $app->post('v1/vehicle/brand/bootgrid', 'Brand@bootgrid');
+        $app->post('v1/vehicle/brand/bootgrid/store', 'Brand@store');
+        $app->patch('v1/vehicle/brand/bootgrid/update/{brandId}', 'Brand@update');
+        $app->delete('v1/vehicle/brand/{brnadiId}', 'Brand@destroy');
 
         $app->get('v1/vehicle/classification', 'Classification@index');
         $app->get('v1/vehicle/classification/{classificationId}', 'Classification@get');
         $app->options('v1/vehicle/classification/lists', 'Classification@lists');
         $app->post('v1/vehicle/classification/bootgrid', 'Classification@bootgrid');
+        $app->post('v1/vehicle/classification/store', 'Classification@store');
+        $app->patch('v1/vehicle/classification/update/{classificationId}', 'Classification@update');
+        $app->delete('v1/vehicle/classification/{classificationId}', 'Classification@destroy');
 
         $app->get('v1/vehicle/series', 'Series@index');
         $app->get('v1/vehicle/series/{seriesId}', 'Series@get');
         $app->options('v1/vehicle/series/lists', 'Series@lists');
         $app->post('v1/vehicle/series/bootgrid', 'Series@bootgrid');
+        $app->post('v1/vehicle/series/store', 'Series@store');
+        $app->patch('v1/vehicle/series/update/{seriesId}', 'Series@update');
+        $app->destroy('v1/vehicle/series/{seriesId}', 'Series@destroy');
 
         $app->get('v1/vehicle/type', 'Type@index');
         $app->get('v1/vehicle/type/{typeId}', 'Type@get');
         $app->options('v1/vehicle/type/lists', 'Type@lists');
         $app->post('v1/vehicle/type/bootgrid', 'Type@bootgrid');
+        $app->post('v1/vehicle/type/store', 'Type@store');
+        $app->patch('v1/vehicle/type/update/{typeId}', 'Type@update');
+        $app->destroy('v1/vehicle/type/{typeId}', 'Type@destroy');
 
         $app->get('v1/vehicle/vehicle', 'Vehicle@index');
         $app->get('v1/vehicle/vehicle/{vehicleId}', 'Vehicle@get');
