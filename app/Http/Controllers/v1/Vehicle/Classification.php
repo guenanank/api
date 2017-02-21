@@ -30,7 +30,7 @@ class Classification extends \App\Http\Controllers\Controller {
                 $sortType = $value;
             endforeach;
         endif;
-        
+
         if (empty($search)) :
             $rows = Classifications::skip($skip)->take($rowCount)->orderBy($sortColumn, $sortType)->get();
             $total = Classifications::count();
@@ -51,6 +51,35 @@ class Classification extends \App\Http\Controllers\Controller {
             'rows' => $rows,
             'total' => $total
         ]);
+    }
+
+    public function store(Request $request) {
+        $validator = Validator::make($request->all(), Classifications::rules());
+        if ($validator->fails()) :
+            return response($validator->errors(), 422);
+        endif;
+
+        $create = Classifications::create($request->all());
+        return response(['create' => $create], 200);
+    }
+
+    public function update(Request $request, $classificationId) {
+        $classification = Classifications::findOrFail($classificationId);
+        Classifications::rules(['classificationName' => 'required|string|max:127|unique:vehicle.classifications,classificationName,' . $classification->classificationId . ',classificationId']);
+        $validator = Validator::make($request->all(), Classifications::rules());
+
+        if ($validator->fails()) :
+            return response($validator->errors(), 422);
+        endif;
+
+        $update = $classification->update($request->all());
+        return response(['update' => $update], 200);
+    }
+
+    public function destroy($classificationId) {
+        $classification = Classifications::findOrFail($classificationId);
+        $delete = $classification->delete();
+        return response(['delete' => $delete], $delete ? 200 : 422);
     }
 
     public function lists() {

@@ -5,12 +5,12 @@ namespace App\Http\Controllers\v1\Vehicle;
 class Series extends \App\Http\Controllers\Controller {
 
     public function index() {
-        $series = \App\Models\Vehicle\Series::with('brand', 'classification')->get();
+        $series = \App\Models\Vehicle\Series::with('series', 'classification')->get();
         return response($series);
     }
-    
+
     public function get($seriesId) {
-        $series = \App\Models\Vehicle\Series::with('brand', 'classification')->findOrFail($seriesId);
+        $series = \App\Models\Vehicle\Series::with('series', 'classification')->findOrFail($seriesId);
         return response($series);
     }
 
@@ -29,25 +29,33 @@ class Series extends \App\Http\Controllers\Controller {
             endforeach;
         endif;
 
-        $rows = \App\Models\Vehicle\Series::where('seriesName', 'like', '%' . $search . '%')
-                ->orWhereHas('brand', function($query) use($search) {
-                    $query->where('brandName', 'LIKE', '%' . $search . '%');
-                })
-                ->orWhereHas('classification', function($query) use($search) {
-                    $query->where('classificationName', 'LIKE', '%' . $search . '%');
-                })
-                ->with('brand', 'classification')
-                ->skip($skip)->take($rowCount)->orderBy($sortColumn, $sortType)
-                ->get();
+        if (empty($search)) :
+            $rows = \App\Models\Vehicle\Series::with('series', 'classification')
+                    ->skip($skip)->take($rowCount)->orderBy($sortColumn, $sortType)
+                    ->get();
+            $total = \App\Models\Vehicle\Series::count();
+        else :
+            $rows = \App\Models\Vehicle\Series::where('seriesName', 'like', '%' . $search . '%')
+                    ->orWhereHas('series', function($query) use($search) {
+                        $query->where('seriesName', 'LIKE', '%' . $search . '%');
+                    })
+                    ->orWhereHas('classification', function($query) use($search) {
+                        $query->where('classificationName', 'LIKE', '%' . $search . '%');
+                    })
+                    ->with('series', 'classification')
+                    ->skip($skip)->take($rowCount)->orderBy($sortColumn, $sortType)
+                    ->get();
 
-        $total = \App\Models\Vehicle\Series::where('seriesName', 'like', '%' . $search . '%')
-                ->orWhereHas('brand', function($query) use($search) {
-                    $query->where('brandName', 'LIKE', '%' . $search . '%');
-                })
-                ->orWhereHas('classification', function($query) use($search) {
-                    $query->where('classificationName', 'LIKE', '%' . $search . '%');
-                })
-                ->count();
+            $total = \App\Models\Vehicle\Series::where('seriesName', 'like', '%' . $search . '%')
+                    ->orWhereHas('series', function($query) use($search) {
+                        $query->where('seriesName', 'LIKE', '%' . $search . '%');
+                    })
+                    ->orWhereHas('classification', function($query) use($search) {
+                        $query->where('classificationName', 'LIKE', '%' . $search . '%');
+                    })
+                    ->count();
+        endif;
+
 
         return response([
             'current' => (int) $current,
@@ -57,6 +65,35 @@ class Series extends \App\Http\Controllers\Controller {
         ]);
     }
 
+    public function store(Request $request) {
+        $validator = Validator::make($request->all(), \App\Models\Vehicle\Series::rules());
+        if ($validator->fails()) :
+            return response($validator->errors(), 422);
+        endif;
+
+        $create = \App\Models\Vehicle\Series::create($request->all());
+        return response(['create' => $create], 200);
+    }
+
+    public function update(Request $request, $seriesId) {
+        $series = \App\Models\Vehicle\Series::findOrFail($seriesId);
+        \App\Models\Vehicle\Series::rules(['seriesName' => 'required|string|max:127|unique:vehicle.series,seriesName,' . $series->seriesId . ',seriesId']);
+        $validator = Validator::make($request->all(), \App\Models\Vehicle\Series::rules());
+
+        if ($validator->fails()) :
+            return response($validator->errors(), 422);
+        endif;
+
+        $update = $series->update($request->all());
+        return response(['update' => $update], 200);
+    }
+
+    public function destroy($seriesId) {
+        $series = \App\Models\Vehicle\Series::findOrFail($seriesId);
+        $delete = $series->delete();
+        return response(['delete' => $delete], $delete ? 200 : 422);
+    }
+    
     public function lists() {
         $lists = \App\Models\Vehicle\Series::lists('seriesName', 'seriesId');
         return response($lists);

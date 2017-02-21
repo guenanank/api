@@ -10,7 +10,7 @@ class Brand extends \App\Http\Controllers\Controller {
         $brands = Brands::with('series')->get();
         return response($brands);
     }
-    
+
     public function get($brandId) {
         $brand = Brands::with('series')->findOrFail($brandId);
         return response($brand);
@@ -31,19 +31,16 @@ class Brand extends \App\Http\Controllers\Controller {
             endforeach;
         endif;
 
-        $rows = Brands::where('brandName', 'like', '%' . $search . '%')
-                ->orWhereHas('series', function($query) use($search) {
-                    $query->where('seriesName', 'LIKE', '%' . $search . '%');
-                })
-                ->with('series')
-                ->skip($skip)->take($rowCount)->orderBy($sortColumn, $sortType)
-                ->get();
+        if (empty($search)) :
+            $rows = Brands::skip($skip)->take($rowCount)->orderBy($sortColumn, $sortType)->get();
+            $total = Brands::count();
+        else :
+            $rows = Brands::where('brandName', 'like', '%' . $search . '%')
+                    ->skip($skip)->take($rowCount)->orderBy($sortColumn, $sortType)->get();
 
-        $total = Brands::where('brandName', 'like', '%' . $search . '%')
-                ->orWhereHas('series', function($query) use($search) {
-                    $query->where('seriesName', 'LIKE', '%' . $search . '%');
-                })
-                ->count();
+            $total = Brands::where('brandName', 'like', '%' . $search . '%')->count();
+        endif;
+
 
         return response([
             'current' => (int) $current,
@@ -51,6 +48,35 @@ class Brand extends \App\Http\Controllers\Controller {
             'rows' => $rows,
             'total' => $total
         ]);
+    }
+    
+    public function store(Request $request) {
+        $validator = Validator::make($request->all(), Brands::rules());
+        if ($validator->fails()) :
+            return response($validator->errors(), 422);
+        endif;
+
+        $create = Brands::create($request->all());
+        return response(['create' => $create], 200);
+    }
+
+    public function update(Request $request, $brandId) {
+        $brand = Brands::findOrFail($brandId);
+        Brands::rules(['brandName' => 'required|string|max:127|unique:vehicle.brands,brandName,' . $brand->brandId . ',brandId']);
+        $validator = Validator::make($request->all(), Brands::rules());
+
+        if ($validator->fails()) :
+            return response($validator->errors(), 422);
+        endif;
+
+        $update = $brand->update($request->all());
+        return response(['update' => $update], 200);
+    }
+
+    public function destroy($brandId) {
+        $brand = Brands::findOrFail($brandId);
+        $delete = $brand->delete();
+        return response(['delete' => $delete], $delete ? 200 : 422);
     }
 
     public function lists() {
