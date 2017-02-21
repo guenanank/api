@@ -10,7 +10,7 @@ class Classification extends \App\Http\Controllers\Controller {
         $classifications = Classifications::with('series')->get();
         return response($classifications);
     }
-    
+
     public function get($classificationId) {
         $classification = Classifications::with('series')->findOrFail($classificationId);
         return response($classification);
@@ -30,20 +30,20 @@ class Classification extends \App\Http\Controllers\Controller {
                 $sortType = $value;
             endforeach;
         endif;
+        
+        if (empty($search)) :
+            $rows = Classifications::skip($skip)->take($rowCount)->orderBy($sortColumn, $sortType)->get();
+            $total = Classifications::count();
+        else :
+            $rows = Classifications::where('classificationName', 'like', '%' . $search . '%')
+                    ->orWhere('classificationDesc', 'like', '%' . $search . '%')
+                    ->skip($skip)->take($rowCount)->orderBy($sortColumn, $sortType)
+                    ->get();
 
-        $rows = Classifications::where('classificationName', 'like', '%' . $search . '%')
-                ->orWhereHas('series', function($query) use($search) {
-                    $query->where('seriesName', 'LIKE', '%' . $search . '%');
-                })
-                ->with('series')
-                ->skip($skip)->take($rowCount)->orderBy($sortColumn, $sortType)
-                ->get();
-
-        $total = Classifications::where('classificationName', 'like', '%' . $search . '%')
-                ->orWhereHas('series', function($query) use($search) {
-                    $query->where('seriesName', 'LIKE', '%' . $search . '%');
-                })
-                ->count();
+            $total = Classifications::where('classificationName', 'like', '%' . $search . '%')
+                    ->orWhere('classificationDesc', 'like', '%' . $search . '%')
+                    ->count();
+        endif;
 
         return response([
             'current' => (int) $current,
