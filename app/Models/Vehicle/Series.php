@@ -10,8 +10,8 @@ class Series extends \Illuminate\Database\Eloquent\Model {
 
     public static function rules($rules = []) {
         return array_merge($rules, [
-            'classificationId' => 'required|exists:vehicle.classification,classificationId',
-            'brandId' => 'required|exists:vehicle.brand,brandId',
+            'classificationId' => 'required|exists:vehicle.classifications,classificationId',
+            'brandId' => 'required|exists:vehicle.brands,brandId',
             'seriesName' => 'required|string|max:127',
         ]);
     }

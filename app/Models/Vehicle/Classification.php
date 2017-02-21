@@ -5,13 +5,12 @@ namespace App\Models\Vehicle;
 class Classification extends \Illuminate\Database\Eloquent\Model {
 
     protected $connection = 'vehicle';
-    protected $table = 'classifications';
     public $primaryKey = 'classificationId';
     protected $fillable = ['classificationName', 'classificationDesc'];
 
     public static function rules($rules = []) {
         return array_merge($rules, [
-            'classificationName' => 'required|string|max:127|unique:vehicle.classification',
+            'classificationName' => 'required|string|max:127|unique:vehicle.' . $this->table,
             'classificationDesc' => 'max:225'
         ]);
     }
