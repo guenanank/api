@@ -109,7 +109,7 @@ $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers\v1'], 
         $app->post('v1/vehicle/series/bootgrid', 'Series@bootgrid');
         $app->post('v1/vehicle/series/store', 'Series@store');
         $app->patch('v1/vehicle/series/update/{seriesId}', 'Series@update');
-        $app->destroy('v1/vehicle/series/{seriesId}', 'Series@destroy');
+        $app->delete('v1/vehicle/series/{seriesId}', 'Series@destroy');
 
         $app->get('v1/vehicle/type', 'Type@index');
         $app->get('v1/vehicle/type/{typeId}', 'Type@get');
@@ -117,7 +117,7 @@ $app->group(['middleware' => 'auth', 'namespace' => 'App\Http\Controllers\v1'], 
         $app->post('v1/vehicle/type/bootgrid', 'Type@bootgrid');
         $app->post('v1/vehicle/type/store', 'Type@store');
         $app->patch('v1/vehicle/type/update/{typeId}', 'Type@update');
-        $app->destroy('v1/vehicle/type/{typeId}', 'Type@destroy');
+        $app->delete('v1/vehicle/type/{typeId}', 'Type@destroy');
 
         $app->get('v1/vehicle/vehicle', 'Vehicle@index');
         $app->get('v1/vehicle/vehicle/{vehicleId}', 'Vehicle@get');
