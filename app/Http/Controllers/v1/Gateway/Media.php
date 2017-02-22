@@ -16,7 +16,7 @@ class Media extends \App\Http\Controllers\Controller {
     }
     
     public function get($mediaId) {
-        $media = MediaModel::with('mediaGroup', 'mediaType')->findOrFail($mediaId);
+        $media = MediaModel::with('mediaGroup', 'mediaCategory')->findOrFail($mediaId);
         return response($media);
     }
 
@@ -36,8 +36,8 @@ class Media extends \App\Http\Controllers\Controller {
         endif;
 
         $rows = MediaModel::where('mediaName', 'like', '%' . $search . '%')
-                ->orWhereHas('mediaType', function($type) use($search) {
-                    $type->where('mediaTypeName', 'LIKE', '%' . $search . '%');
+                ->orWhereHas('mediaCategory', function($type) use($search) {
+                    $type->where('mediaCategoryName', 'LIKE', '%' . $search . '%');
                 })
                 ->orWhereHas('mediaGroup', function($type) use($search) {
                     $type->where('mediaGroupName', 'LIKE', '%' . $search . '%');
@@ -61,12 +61,7 @@ class Media extends \App\Http\Controllers\Controller {
         $lists = MediaModel::lists('mediaName', 'mediaId');
         return response($lists);
     }
-    
-    public function listsGMC() {
-        $lists = MediaModel::where('mediaIsExternal', true)->lists('mediaName', 'mediaId');
-        return response($lists);
-    }
-    
+        
     public function internalPrintLists() {
         $lists = MediaModel::where([
             ['mediaIsExternal', '=', false],
