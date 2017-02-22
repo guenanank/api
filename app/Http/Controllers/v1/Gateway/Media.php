@@ -42,7 +42,7 @@ class Media extends \App\Http\Controllers\Controller {
                 ->orWhereHas('mediaGroup', function($type) use($search) {
                     $type->where('mediaGroupName', 'LIKE', '%' . $search . '%');
                 })
-                ->with('mediaType', 'mediaGroup')
+                ->with('mediaCategory', 'mediaGroup')
                 ->skip($skip)->take($rowCount)->orderBy($sortColumn, $sortType)
                 ->get();
 
